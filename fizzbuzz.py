@@ -2,12 +2,12 @@ from keras.models import Sequential
 from keras.layers import Dense,Activation,Dropout
 from keras.optimizers import RMSprop
 from keras.utils import np_utils
-import numpy
 from keras.callbacks import Callback,EarlyStopping
 
+import numpy
 
-num_digits = 10
-nb_classes = 4
+num_digits = 10 # binary encode numbers
+nb_classes = 4 # 4 classes : number/fizz/buzz/fizzbuzz
 batch_size = 128
 
 def fb_encode(i):
@@ -19,8 +19,14 @@ def fb_encode(i):
 def bin_encode(i):
     return [i >> d & 1 for d in range(num_digits)]
 
-def fizz_buzz(i, pred):
+def fizz_buzz_pred(i, pred):
     return [str(i), "fizz", "buzz", "fizzbuzz"][pred.argmax()]
+
+def fizz_buzz(i):
+    if   i % 15 == 0: return "fizzbuzz"
+    elif i % 5  == 0: return "buzz"
+    elif i % 3  == 0: return "fizz"
+    else:             return str(i)
 
 def create_dataset():
     dataX,dataY = [],[]
@@ -32,9 +38,6 @@ def create_dataset():
 
 
 dataX,dataY = create_dataset()
-
-print dataX.shape
-print dataY.shape
 
 class EarlyStopping(Callback):
     def __init__(self, monitor='accuracy', value=1.0, verbose=0):
@@ -56,26 +59,31 @@ class EarlyStopping(Callback):
 
 model = Sequential()
 
-model.add(Dense(64, input_shape=(10,)))
+model.add(Dense(64, input_shape=(num_digits,)))
 model.add(Activation('relu'))
-model.add(Dropout(0.1))
+#model.add(Dropout(0.5))
 model.add(Dense(128))
 model.add(Activation('relu'))
-model.add(Dropout(0.1))
+model.add(Dropout(0.2))
 model.add(Dense(4))
 model.add(Activation('softmax'))
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(),
-              metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',optimizer=RMSprop())
 
+callbacks = [EarlyStopping(monitor='loss',value=1.2e-07,verbose=1)]
 
-callbacks = [EarlyStopping(monitor='loss',value=0.01,verbose=1)]
+model.fit(dataX,dataY,nb_epoch=10000,batch_size=batch_size)#,callbacks=callbacks)
 
-model.fit(dataX,dataY,nb_epoch=10000,batch_size=batch_size,callbacks=callbacks)
+errors = 0
+correct = 0
 
 for i in range(1,101):
     x = bin_encode(i)
     y = model.predict(numpy.array(x).reshape(-1,10))
-    print fizz_buzz(i,y)
+    print fizz_buzz_pred(i,y)
+    if fizz_buzz_pred(i,y) == fizz_buzz(i):
+        correct = correct + 1
+    else:
+        errors = errors + 1
 
+print "Errors :" , errors, " Correct :", correct
