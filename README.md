@@ -7,3 +7,5 @@ A few weeks ago I read the funny blog post of Joel Grus http://joelgrus.com/2016
 As I use keras for my machine learning projects , I made an implementation based on keras.io deep learning library 
 
 I get 92% accuracy : not that bad ;)
+
+I finally manage to get 100% using the SReLU activation layer from Keras 
