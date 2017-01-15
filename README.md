@@ -1,9 +1,9 @@
 # fizz-buzz-keras
 
-fizz buzz in Keras
+Fizz Buzz implementation with Keras.io 
 
-Some week ago I read the funny blog post of Joel Grus http://joelgrus.com/2016/05/23/fizz-buzz-in-tensorflow/ about an interview and the fizz buzz test
+A few weeks ago I read the funny blog post of Joel Grus http://joelgrus.com/2016/05/23/fizz-buzz-in-tensorflow/ about an interview and the fizz buzz test
 
-As I use keras, I rewrote the code with keras 
+As I use keras for my machine learning projects , I made an implementation based on keras.io deep learning library 
 
-I get 92% accuracy , not that bad ;)
+I get 92% accuracy : not that bad ;)
