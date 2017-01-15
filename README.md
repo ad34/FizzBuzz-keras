@@ -8,4 +8,4 @@ As I use keras for my machine learning projects , I made an implementation based
 
 I get 92% accuracy : not that bad ;)
 
-I finally manage to get 100% using the SReLU activation layer from Keras 
+I finally managed to get 100% accuracy using the SReLU activation layer from Keras 

@@ -62,7 +62,7 @@ model = Sequential()
 
 model.add(Dense(64, input_shape=(num_digits,)))
 model.add(SReLU())
-#model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 model.add(Dense(128))
 model.add(SReLU())
 model.add(Dropout(0.2))
@@ -71,9 +71,8 @@ model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',optimizer=RMSprop())
 
-callbacks = [EarlyStopping(monitor='loss',value=1.193e-07,verbose=1)]
-
-model.fit(dataX,dataY,nb_epoch=10000,batch_size=batch_size,callbacks=callbacks)
+#callbacks = [EarlyStopping(monitor='loss',value=1.193e-07,verbose=1)]
+model.fit(dataX,dataY,nb_epoch=10000,batch_size=batch_size)
 
 errors = 0
 correct = 0
