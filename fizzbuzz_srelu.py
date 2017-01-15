@@ -71,9 +71,9 @@ model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',optimizer=RMSprop())
 
-callbacks = [EarlyStopping(monitor='loss',value=1.2e-07,verbose=1)]
+callbacks = [EarlyStopping(monitor='loss',value=1.193e-07,verbose=1)]
 
-model.fit(dataX,dataY,nb_epoch=10000,batch_size=batch_size)#,callbacks=callbacks)
+model.fit(dataX,dataY,nb_epoch=10000,batch_size=batch_size,callbacks=callbacks)
 
 errors = 0
 correct = 0
